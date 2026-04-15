@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="style.css">
+  <script src="fetchin.js" defer></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<div id="wrap">
+  <div id="container">
+    <div class='header'>  
+      
+<img src="bot.png" width="80px" style="filter: drop-;">
+  
+      <p >   welcome to chat</p>
+      
+    </div>
+
+
+    <div id="messages">
+      <div class="bubble-left">
+        <img src="bot.png" class="bot-avatar" alt="bot">
+        <div class="bubble-text"><p>Hi! What can I do for you?</p></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="answer-wrap">
+      <input id="txt" placeholder="Put text here">
+      <button onclick="sendText()">Send</button>
+  </div>
+
+</div>
+
+</body>
