@@ -5,7 +5,7 @@ hi can you create me a file named " lolo" it creates a file named lolo, which ma
 
 
 
-![screenshot](chatbot.png)
+![gif](bot.gif)
 
 
 
