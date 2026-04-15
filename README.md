@@ -1,6 +1,7 @@
 # Base Agent (Frontend + Backend + Agent + Ollama)
 
-This project is a simple chat assistant that converts user requests into file actions.
+This project is a simple chat assistant replies to a user request   example:
+hi can you create me a file named " lolo" it creates a file named lolo, which makes this project a good start for genarative ia
 
 
 
