@@ -2,6 +2,12 @@
 
 This project is a simple chat assistant that converts user requests into file actions.
 
+
+
+![screenshot](chatbot.png)
+
+
+
 ## Architecture
 
 - `frontend/`: Chat UI (HTML/CSS/JS)
