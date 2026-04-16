@@ -3,7 +3,9 @@ from .create_file import create_file
 from .welcom import welcom
 from .delete_file import delete_file
 from .writein_file import writein_file
+
 from .deletein_file import deletein_file
+from .execute_regex import execute_regex
 
 
 LIST_OF_ACTIONS = {
@@ -12,5 +14,6 @@ LIST_OF_ACTIONS = {
     "welcom": welcom,
     "delete_file": delete_file,
     "writein_file": writein_file,
-    "deletein_file": deletein_file
+    "deletein_file": deletein_file,
+    "execute_regex": execute_regex
 }

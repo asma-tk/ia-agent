@@ -12,10 +12,12 @@ function buildBotResultHtml(data) {
     html += `<p><strong>Action:</strong> ${escapeHtml(action.action)}</p>`;
   }
 
-  if (action && action.action === "create_file" && Array.isArray(action.params) && action.params[0]) {
+  // Show download link for created or modified files
+  const fileActions = ["create_file", "writein_file", "deletein_file", "execute_regex"];
+  if (action && fileActions.includes(action.action) && Array.isArray(action.params) && action.params[0]) {
     const fileName = String(action.params[0]);
     html += `
-      <p><strong>File created:</strong> ${escapeHtml(fileName)}</p>
+      <p><strong>File ${action.action === "create_file" ? "created" : "modified"}:</strong> ${escapeHtml(fileName)}</p>
       <p><a href="#" class="download-link" data-filename="${escapeHtml(fileName)}">Download ${escapeHtml(fileName)}</a></p>
     `;
   }
