@@ -4,10 +4,13 @@ import requests
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+
+from fastapi.staticfiles import StaticFiles
 from config import LlamaChat, SYSTEM_PROMPT
 
 
 app = FastAPI()
+app.mount("/files", StaticFiles(directory="../files"), name="files")
 chat = LlamaChat()
 
 app.add_middleware(

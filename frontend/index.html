@@ -6,18 +6,18 @@
     <title>Chat</title>
     <link rel="stylesheet" href="style.css">
   <script src="fetchin.js" defer></script>
-    <script src="script.js" defer></script>
+  <script src="download.js" defer></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
 
 <div id="wrap">
   <div id="container">
-    <div class='header'>  
-      
-<img src="bot.png" width="80px" style="filter: drop-;">
-  
-      <p >   welcome to chat</p>
-      
+
+    <div class='header'>
+      <img src="bot.png" width="80px" style="filter: drop-;">
+      <p>welcome to chat</p>
+      <button id="delete-chat-btn" style="float:right;margin:10px;">Delete Chat</button>
     </div>
 
 
@@ -30,7 +30,7 @@
 
   </div>
 
-  <div id="answer-wrap">
+    <div id="answer-wrap">
       <input id="txt" placeholder="Put text here">
       <button onclick="sendText()">Send</button>
   </div>
