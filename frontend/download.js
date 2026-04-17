@@ -1,7 +1,7 @@
 // Utility to trigger download of a file from /files directory
 function triggerDownload(filename) {
   const link = document.createElement('a');
-  link.href = `/files/${filename}`;
+  link.href = `../files/${filename}`;
   link.download = filename;
   document.body.appendChild(link);
   link.click();

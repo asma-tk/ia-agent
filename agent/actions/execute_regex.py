@@ -6,7 +6,7 @@ def execute_regex(file_name, pattern):
     Supprime tous les caractères correspondant au pattern regex dans le fichier files/file_name.
     Si pattern == '{}', supprime toutes les accolades { et }.
     """
-    file_path = os.path.join('files', file_name)
+    file_path = os.path.join('../files', file_name)
     with open(file_path, "r") as file:
         content = file.read()
 

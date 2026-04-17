@@ -1,6 +1,4 @@
-// =====================
-// Main Chat Logic
-// =====================
+// main chat logic
 
 function buildBotResultHtml(data) {
   const botMessage = data.response || data.message || "Action done.";

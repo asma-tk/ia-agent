@@ -42,8 +42,8 @@ class LlamaChat:
             "http://localhost:11434/api/chat",
             json={
                 "model": OLLAMA_MODEL,
-                "messages": messages,
-                "stream": False
+                "messages": messages, # List of dicts with "role" and "content"
+                "stream": False # Whether to stream the response or get it all at once
                 
             }
         )
