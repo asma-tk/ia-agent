@@ -1,6 +1,4 @@
-// =====================
-// Chat Bubble Functions
-// =====================
+
 
 function appendUserBubble(text) {
   const messages = getMessagesContainer();

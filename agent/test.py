@@ -2,7 +2,6 @@ from actions.create_file import create_file
 from actions.delete_file import delete_file
 from actions.writein_file import writein_file
 from actions.deletein_file import deletein_file 
-from actions.execute_regex import execute_regex
 from agent import do
 
 # create_file("coucou.txt")
@@ -67,6 +66,8 @@ test_list = [
         "action": "delete_file",
         "params": ["fichier3"]
     },
+
+    {"action": "to_pdf", "params": ["fichier1.txt"]}
 ]
 
 do(test_list)

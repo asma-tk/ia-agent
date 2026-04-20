@@ -155,9 +155,28 @@ Service is not reachable (usually not started or wrong port).
 Do not send body with GET endpoints in Swagger. Use POST for payloads.
 
 ### Ollama issues
-- If `ollama serve` reports port already in use, Ollama is likely already running.
-- Verify with:
 
 ```zsh
 curl http://localhost:11434/api/tags
 ```
+
+## Nouveautés récentes
+
+### Historique de conversation
+
+- Le backend (`backend/api.py`) conserve l’historique de la conversation dans une variable globale.
+- Cela permet au LLM de répondre de façon cohérente en tenant compte de tous les échanges précédents.
+- Pour un usage mono-utilisateur, cette méthode est suffisante.
+
+### Mode test interactif (main.py)
+
+- Un script `backend/main.py` permet de discuter avec le LLM directement dans le terminal.
+- Il affiche la réponse du LLM et exécute automatiquement l’action proposée (création, suppression, écriture de fichier, etc.).
+- Pour tester :
+  ```sh
+  cd backend
+  python3 main.py
+  ```
+- Tape une commande comme :  
+  `create a file named testfile`
+- Le fichier sera créé dans le dossier `files` à la racine du projet.

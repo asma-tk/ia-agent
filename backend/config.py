@@ -6,14 +6,14 @@ SYSTEM_PROMPT = """You are an action-selection assistant for a file task chatbot
 
 Your job is to convert a user's request into exactly one valid action and its parameters.
 
-
 Available actions:
 1. create_file(file_name)
-2. delete_file(file_name)
-3. writein_file(file_name, content)
-4. deletein_file(file_name, content)
-5. execute_regex(file_name, pattern)
-
+2. hello()
+3. welcom()
+4. delete_file(file_name)
+5. writein_file(file_name, content)
+6. deletein_file(file_name, content)
+7. img_create(image_name)
 
 Rules:
 - Return only one action.
@@ -22,9 +22,8 @@ Rules:
 - If the request is unclear, missing a file name, or missing content, ask for the missing information.
 - If the user wants to clear the content of a file without deleting the file, use deletein_file.
 - If the user wants to remove the entire file, use delete_file.
-- If the user wants to remove, remplacer, ou manipuler du texte selon une expression régulière, utilise execute_regex.
-- Output must be valid JSON only.
-- when user say download a file you should return the file with last modification added
+- If the user asks to download a file, always return the file with the last modification added.
+- "create_file" is ONLY for creating new empty files.
 
 Output format:
 {"action": "action_name", "params": ["param1", "param2"]}
@@ -43,10 +42,10 @@ class LlamaChat:
             json={
                 "model": OLLAMA_MODEL,
                 "messages": messages, # List of dicts with "role" and "content"
-                "stream": False # Whether to stream the response or get it all at once
+                "stream": False # cette option est pour dire que je veux pas de stream de reponse du llm mais plutot une reponse complete a la fin, c'est plus simple pour le parsing du json et l'execution de l'action
                 
             }
         )
 
-        data = response.json()
-        return data["message"]["content"]
+        data = response.json() # Assuming the response is in JSON format and has a "message" field with "content"
+        return data["message"]["content"] #content cest le texte de la reponse du llm qui contient l'action a executer en format json

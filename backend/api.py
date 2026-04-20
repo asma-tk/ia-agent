@@ -11,7 +11,8 @@ from config import LlamaChat, SYSTEM_PROMPT
 
 app = FastAPI()
 #Permet d’accéder aux fichiers du dossier 
-app.mount("/files", StaticFiles(directory="../files"), name="files")
+app.mount("/files", StaticFiles(directory="../files"), name="files") 
+
 chat = LlamaChat()
 
 app.add_middleware(
@@ -32,15 +33,13 @@ def apply_action():
    response = requests.get("http://127.0.0.1:8002/openapi.json")
    return response.json()
 
+
 history=[]
+
 @app.post("/chat")
 def chat_endpoint(request: UserRequest):
    try:
-      # context 
-      # liste et description des actions
-      # explication pour le llm de ce qu'il doit faire
-      # historique de la conversation
-    
+     
     #engistrer la reponse du llm pour le prochain tour de conversation
       
       # Ajouter la requête de l'utilisateur à l'historique
@@ -50,10 +49,9 @@ def chat_endpoint(request: UserRequest):
 
        # Inclure l'historique dans les messages envoyés au modèle
 
-       messages = [{"role": "system", "content": SYSTEM_PROMPT}, *history] 
+       messages = [{"role": "system", "content": SYSTEM_PROMPT}, *history]  # Inclure tout l'historique de la conversation dans les messages envoyés au LLM pour un contexte complet
       
       #apelle de llm pour obtenir l'action à exécuter
-
        response=chat.get_response(messages)
 
        #sauver la reponse du llm dans l'historique pour le prochain tour de conversation
@@ -69,11 +67,14 @@ def chat_endpoint(request: UserRequest):
        #executer L'action de l'agent et recuperer la reponse de l'action
        agent_response = requests.post(
        "http://127.0.0.1:8002//apply_action",
-        json=action_data,
+        json=action_data,   #recuperer la repense qui en format json
        )
        agent_response.raise_for_status()  # Vérifie si la requête a réussi
-       agent_playload = agent_response.json()
+       agent_playload = agent_response.json()# Récupérer la réponse de l'agent après l'exécution de l'action
+        
 
+
+        #finalement   retourne rla repense pour le front
        return {
           "status": "success",
             "agent_response": agent_playload.get("message", "action applied successfully"),

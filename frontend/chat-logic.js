@@ -1,17 +1,19 @@
 // main chat logic
 
 function buildBotResultHtml(data) {
-  const botMessage = data.response || data.message || "Action done.";
-  const action = normalizeAction(data.action);
+//Récupère le message du bot à afficher (cherche dans data.response, sinon data.message)
+// Normalizer l'action pour s'assurer qu'elle est dans un format standardisé, même si le backend envoie des formats légèrement différents
+  const action = normalizeAction(data.action); 
+  //pour eviter xml injection on chat
+  let html = `<p>${escapeHtml(botMessage)}</p>`; // Start building the HTML for the bot's response by escaping the bot message to prevent XSS
 
-  let html = `<p>${escapeHtml(botMessage)}</p>`;
-
+  //ajouter l'action
   if (action && action.action) {
-    html += `<p><strong>Action:</strong> ${escapeHtml(action.action)}</p>`;
+    html += `<p><strong>Action:</strong> ${escapeHtml(action.action)}</p>`;// If there is an action, add it to the HTML, also escaping it for safety
   }
 
   // Show download link for created or modified files
-  const fileActions = ["create_file", "writein_file", "deletein_file", "execute_regex"];
+  const fileActions = ["create_file", "writein_file", "deletein_file", "img_create"];
   if (action && fileActions.includes(action.action) && Array.isArray(action.params) && action.params[0]) {
     const fileName = String(action.params[0]);
     html += `
@@ -23,8 +25,8 @@ function buildBotResultHtml(data) {
   return html;
 }
 
-function appendThinkingBubble() {
-  const messages = getMessagesContainer();
+function appendThinkingBubble() {    // Append a "thinking" bubble to the chat to indicate that the bot is processing
+  const messages = getMessagesContainer(); //
   const div = document.createElement("div");
   div.className = "bubble-left bubble-thinking";
   div.innerHTML = `

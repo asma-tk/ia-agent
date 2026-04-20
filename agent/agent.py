@@ -1,9 +1,6 @@
 from actions.list_of_actions import LIST_OF_ACTIONS
-import shutil
 
 def do(actions_list: list[dict]):
     for call in actions_list:
-        LIST_OF_ACTIONS[call["action"]](*call["params"])
-
-
+        LIST_OF_ACTIONS[call["action"]](*call["params"]) # Call the function corresponding to the action name with the provided parameters
 

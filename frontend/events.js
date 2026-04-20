@@ -1,7 +1,7 @@
-// =====================
-// Event Listeners
-// =====================
+// 
+// event Listeners
 
+//quand on clique sur entrer ou sur le bouton envoyer, on envoie le message au backend et on affiche la reponse du bot
 document.addEventListener("DOMContentLoaded", () => {
   restoreChatState();
   document.getElementById("txt").addEventListener("keydown", (e) => {

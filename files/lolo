@@ -1,1 +1,0 @@
-la vie est belle

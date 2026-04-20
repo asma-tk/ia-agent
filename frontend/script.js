@@ -1,11 +1,7 @@
-// =====================
-// Constants
-// =====================
+// constants
 const CHAT_STORAGE_KEY = "chat_messages_html";
 
-// =====================
-// Utility Functions
-// =====================
+// utility Functions
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")
@@ -49,9 +45,7 @@ function restoreChatState() {
   }
 }
 
-// =====================
-// Chat Bubble Functions
-// =====================
+// chat Bubble Functions
 function appendUserBubble(text) {
   const messages = getMessagesContainer();
   const div = document.createElement("div");
@@ -125,9 +119,7 @@ function appendThinkingBubble() {
   return div;
 }
 
-// =====================
-// Main Chat Logic
-// =====================
+// Main chat logic
 function buildBotResultHtml(data) {
   const botMessage = data.response || data.message || "Action done.";
   const action = normalizeAction(data.action);
@@ -150,44 +142,15 @@ function buildBotResultHtml(data) {
   return html;
 }
 
-async function sendText() {
-  const input = document.getElementById("txt");
-  const button = document.querySelector("#answer-wrap button");
-  const text = input.value.trim();
-  if (text === "") return;
-
-  appendUserBubble(text);
-  input.value = "";
-  input.disabled = true;
-  button.disabled = true;
-  const thinkingBubble = appendThinkingBubble();
-
-  try {
-    const data = await sendMessageToBackend(text);
-    thinkingBubble.remove();
-    const resultHtml = buildBotResultHtml(data);
-    appendBotHtmlBubble(resultHtml);
-  } catch (error) {
-    thinkingBubble.remove();
-    appendBotBubble(`Error: ${error.message}`);
-  } finally {
-    input.disabled = false;
-    button.disabled = false;
-    input.focus();
-  }
-}
-
 // Make sendText available globally for the button onclick
-window.sendText = sendText;
+// window.sendText = sendText;
 
-// =====================
-// Event Listeners
-// =====================
+// event Listeners
 document.addEventListener("DOMContentLoaded", () => {
   restoreChatState();
 
   document.getElementById("txt").addEventListener("keydown", (e) => {
-    if (e.key === "Enter") sendText();
+    if (e.key === "Enter") window.sendText();
   });
 
   const btn = document.getElementById("delete-chat-btn");

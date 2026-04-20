@@ -13,7 +13,7 @@ app.add_middleware(
 )
 
 class actionRequest(BaseModel):
-    action:str
+    action:str 
     params:list
 
 
