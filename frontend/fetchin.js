@@ -1,4 +1,4 @@
-const BACKEND_CHAT_URL = "http://127.0.0.1:8001/chat";
+const BACKEND_CHAT_URL = "http://127.0.0.1:8000/chat";
 
 
 async function sendMessageToBackend(userInput) {

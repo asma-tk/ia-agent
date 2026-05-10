@@ -21,12 +21,11 @@ class actionRequest(BaseModel):
 
 @app.post("/apply_action")
 def apply_action(request:actionRequest):
-   """Execute action directly when action and params are provided"""
+    """Execute action directly when action and params are provided"""
 
-   action=request.action
-   params=request.params
+    action = request.action
+    params = request.params
 
-   
-#recuperer la liste en format de json et faire une boucle pour appliquer les actions
-   do([{"action": action, "params": params}])
-   return {"message": f"Action {action} applied with params {params}"}
+    # recuperer la liste en format de json et faire une boucle pour appliquer les actions
+    result = do([{"action": action, "params": params}])
+    return {"message": result}
