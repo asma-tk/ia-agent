@@ -1,9 +1,10 @@
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from agent import do
-import anthropic
 import json
+import requests
 
 app = FastAPI()
 
@@ -17,6 +18,7 @@ app.add_middleware(
 class ActionRequest(BaseModel):
     action: str
     params: list
+
 
 class ChatRequest(BaseModel):
     user_input: str
@@ -34,10 +36,12 @@ def apply_action(request: ActionRequest):
     return {"message": result}
 
 
+
 @app.post("/chat")
 def chat(request: ChatRequest):
-    """Parse natural language input and execute the corresponding action"""
-    client = anthropic.Anthropic()
+    """Parse natural language input and execute the corresponding action using Ollama"""
+    OLLAMA_URL = "http://localhost:11434/api/generate"  # Change if your Ollama server is remote
+    OLLAMA_MODEL = "llama3"  # Change to your preferred model name
 
     system_prompt = f"""You are an agent that maps natural language to actions.
 Available actions: {json.dumps(AVAILABLE_ACTIONS)}
@@ -57,16 +61,18 @@ Rules:
 
 Do not include any explanation or extra text. Only the JSON object."""
 
-    message = client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=256,
-        system=system_prompt,
-        messages=[{"role": "user", "content": request.user_input}]
-    )
+    prompt = f"<|system|>\n{system_prompt}\n<|user|>\n{request.user_input}\n<|assistant|>"
 
-    raw = message.content[0].text.strip()
-
+    payload = {
+        "model": OLLAMA_MODEL,
+        "prompt": prompt,
+        "stream": False
+    }
     try:
+        response = requests.post(OLLAMA_URL, json=payload, timeout=60)
+        response.raise_for_status()
+        result_json = response.json()
+        raw = result_json.get("response", "").strip()
         parsed = json.loads(raw)
         action = parsed["action"]
         params = parsed["params"]
@@ -81,5 +87,5 @@ Do not include any explanation or extra text. Only the JSON object."""
         return {
             "status": "error",
             "message": f"Failed to parse or execute action: {str(e)}",
-            "raw_llm_output": raw
+            "raw_llm_output": raw if 'raw' in locals() else None
         }
