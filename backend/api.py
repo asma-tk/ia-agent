@@ -68,8 +68,17 @@ def chat_endpoint(request: UserRequest):
         # Executer l'action de l'agent si une action est fournie
         action_result = None
         if action_data["action"]:
+            # Dynamically determine the backend URL for /apply_action
+            from fastapi import Request as FastAPIRequest
+            try:
+                # Try to get the host from the request headers (works in FastAPI >=0.68)
+                backend_url = request.headers.get("host", "127.0.0.1:8000")
+                scheme = "https" if backend_url.startswith("https") or backend_url.endswith(":443") else "http"
+                apply_action_url = f"{scheme}://{backend_url}/apply_action"
+            except Exception:
+                apply_action_url = "http://127.0.0.1:8000/apply_action"
             agent_response = requests.post(
-                "http://127.0.0.1:8001/apply_action",
+                apply_action_url,
                 json=action_data,
             )
             agent_response.raise_for_status()
